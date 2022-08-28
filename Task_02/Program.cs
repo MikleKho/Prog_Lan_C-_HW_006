@@ -6,43 +6,32 @@
 int Prompt(string message)
 {
     System.Console.Write(message);
-    string ReadValue = Console.ReadLine();
-    int result = int.Parse(ReadValue);
+    string readValue = Console.ReadLine();
+    int result = int.Parse(readValue);
     return result;
 }
 
-int[] Mass_rnd_inject(int[] Mass)
+double[] CrossPointCulculate(int k1, int b1, int k2, int b2)
 {
-    Random rnd = new Random();
-    System.Console.Write("Массив -->  ");
-
-    for (int i = 0; i < Mass.Length; i++)
-    {
-        Mass[i] = rnd.Next(100, 1000);
-        System.Console.Write($"  {Mass[i]}");
-    }
-    System.Console.WriteLine("");
-
-    return Mass;
+    double[] crossPoint = new double[2];
+    crossPoint[0] = Math.Round((double)(b2 - b1) / (k1 - k2), 4);
+    crossPoint[1] = (k1 * crossPoint[0] + b1);
+    return crossPoint;
 }
 
-int Mass_Even_count(int[] Mass)
+
+
+int k1 = Prompt("Введите k1 -->  ");
+int b1 = Prompt("Введите b1 -->  ");
+int k2 = Prompt("Введите k2 -->  ");
+int b2 = Prompt("Введите b2 -->  ");
+if (k1 == k2)
 {
-    int Mass_Even_counter = 0;
-
-    for (int i = 1; i < Mass.Length; i++)
-    {
-        if (Mass[i] % 2 == 0)
-        {
-            Mass_Even_counter++;
-        }
-    }
-
-    return (Mass_Even_counter);
+    System.Console.WriteLine("Прямые параллельны и не пересекаются");
 }
-
-int Mass_len = Prompt("Введите размер массива -->  ");
-int[] Mass = new int[Mass_len];
-Mass = Mass_rnd_inject(Mass);
-int Mass_Even_counter = Mass_Even_count(Mass);
-System.Console.WriteLine($"Количество четных чисел в массиве --> {Mass_Even_counter}");
+else
+{
+    double[] crossPoint = new double[2];
+    crossPoint = CrossPointCulculate(k1, b1, k2, b2);
+    System.Console.WriteLine($"Прямые пересекаются в точке X --> {crossPoint[0]} Y --> {crossPoint[1]} ");
+}
